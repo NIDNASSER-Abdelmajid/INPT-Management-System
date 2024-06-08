@@ -1,17 +1,24 @@
 import React from 'react'
 import axios from 'axios'
+import { Link, useParams } from 'react-router-dom'
 
 export default function Home() {
 
-  const [users, setStudents] = React.useState([])
-
+  const [students, setStudents] = React.useState([])
+  const {id} = useParams()
+  
   React.useEffect(() => {
-    loadStudents()
+    chargeStudentsInfo()
   }, [])
 
-  const loadStudents = async () => {
+  const chargeStudentsInfo = async () => {
     const students = await axios.get('http://localhost:8080/students')
     setStudents(students.data)
+  }
+
+  const delStudent = async (id) => {
+    await axios.delete(`http://localhost:8080/student/${id}`)
+    chargeStudentsInfo()
   }
 
   return (
@@ -20,7 +27,7 @@ export default function Home() {
         <table className="table border shadow">
   <thead>
     <tr>
-      <th scope="col">#</th>
+      <th scope="col">ID</th>
       <th scope="col">Name</th>
       <th scope="col">Branch</th>
       <th scope="col">School mail</th>
@@ -29,16 +36,16 @@ export default function Home() {
   </thead>
   <tbody>
     { 
-    users.map((user, index) => (
+    students.map((student, index) => (
       <tr>
         <th scope="row">{index + 1}</th>
-        <td>{user.name}</td>
-        <td>{user.branch}</td>
-        <td>{user.mail}</td>
+        <td>{student.name}</td>
+        <td>{student.branch}</td>
+        <td>{student.mail}</td>
         <td>
-          <button className='btn btn-primary mx-2'>View</button>
-          <button className='btn btn-outline-primary mx-2'>Edit</button>
-          <button className='btn btn-danger mx-2'>Delete</button>
+          <Link to={`/viewstudent/${student.id}`} className='btn btn-primary mx-2'>View</Link>
+          <Link to={`/editstudent/${student.id}`} className='btn btn-outline-primary mx-2'>Edit</Link>
+          <button className='btn btn-danger mx-2' onClick={() => delStudent(student.id)}>Delete</button>
         </td>
       </tr>
     )) 

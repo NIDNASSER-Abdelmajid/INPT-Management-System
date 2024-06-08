@@ -15,10 +15,9 @@ function App() {
         <Routes>
           <Route exact path='/' element={<Home />} />
           <Route exact path='/addstudent' element={<AddStudent />}/>
-          <Route exact path='/editstudent' element={<EditStudent />}/>
-          <Route exact path='/viezstudent' element={<ViewStudent />}/>
+          <Route exact path='/viewstudent/:id' element={<ViewStudent />}/>
+          <Route exact path='/editstudent/:id' element={<EditStudent />}/>
         </Routes>
-        
       </Router>
     </div>
   );
