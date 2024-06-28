@@ -12,7 +12,7 @@ export default function ViewStudent() {
     })
 
     const {id}=useParams()
-
+    
     const chargeStudentInfo = async () => {
         const student = await axios.get(`http://localhost:8080/student/${id}`)
         setStudent(student.data)
@@ -30,7 +30,7 @@ export default function ViewStudent() {
                 <h2 className='text-center m-4'>Student Infos</h2>
                 <div className='card'>
                     <div className='card-header'>
-                        <h3>Student {student.id} details:</h3>
+                        <h3>Student details:</h3>
                         <div className='text-center'>
                             {/* <img src={student.profilePicture} alt="Profile" className='img-fluid rounded-circle' style={{ width: '150px', height: '150px' }} /> */}
                         </div>
